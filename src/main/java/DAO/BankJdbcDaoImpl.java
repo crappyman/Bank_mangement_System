@@ -4,26 +4,48 @@ import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.security.auth.login.AccountNotFoundException;
 
 import Model.Customer;
 import Model.Employee;
+import exception.SystemException;
 
 public class BankJdbcDaoImpl implements BankDAO {
 
 	@Override
-	public List<Customer> fetchAllCustomers() {
-//	Connection conn=DBUtil.obtainConnection();
-//	Statement stmt =(Statement) conn.createStatement();
-//	String query =;
-		// stmt.executeUpdata(query);
-	return null;
+	public List<Customer> fetchAllCustomers()throws SystemException, AccountNotFoundException
+	{
+		List<Customer> allCustomer = new ArrayList<Customer>();
+	Connection conn=DBUtil.obtainConnection();
+  try {
+	Statement stmt =(Statement) conn.createStatement();
+String query ="SELECT * FROM customer_details";
+		
+ResultSet rs = ((java.sql.Statement) stmt).executeQuery(query);
+// iterate through the result set 
+while(rs.next()) {
+	
+	Customer customer = new Customer(rs.getString(1), rs.getString(2), rs.getDouble(3));
+	
+	allCustomer.add(customer);
+}
+} catch (SQLException e) {
+throw new SystemException();
+}
+if(allCustomer.isEmpty()) {
+throw new AccountNotFoundException();
+}
+
+return allCustomer;
 	}
 	
 
 	@Override
 	public List<Employee> fetchAllEmployees() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
