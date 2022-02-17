@@ -44,9 +44,30 @@ return allCustomer;
 	
 
 	@Override
-	public List<Employee> fetchAllEmployees() {
+	public List<Employee> fetchAllEmployees() throws SystemException, AccountNotFoundException{
 		
-		return null;
+		List<Employee> allEmployee = new ArrayList<Employee>();
+		Connection conn=DBUtil.obtainConnection();
+	  try {
+		Statement stmt =(Statement) conn.createStatement();
+	String query ="SELECT * FROM employee_details";
+			
+	ResultSet rs = ((java.sql.Statement) stmt).executeQuery(query);
+	// iterate through the result set 
+	while(rs.next()) {
+		
+		Employee employee = new Employee(rs.getString(1), rs.getString(2));
+		
+		allEmployee.add(employee);
+	}
+	} catch (SQLException e) {
+	throw new SystemException();
+	}
+	if(allEmployee.isEmpty()) {
+	throw new AccountNotFoundException();
+	}
+
+	return allEmployee;
 	}
 
 	@Override
@@ -69,7 +90,7 @@ return allCustomer;
 	}
 
 	@Override
-	public int createAccount(Customer cus) {
+	public int createAccount(Customer cus) throws SystemException{
 		// TODO Auto-generated method stub
 		return 0;
 	}
