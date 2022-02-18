@@ -52,7 +52,7 @@ public class BankServiceImp implements BankService {
    // }
 */
     @Override
-    public double transfer(int fromAccountNo, int toAccountNo, double amount) throws SystemException, Exception {
+    public boolean transfer(int fromAccountNo, int toAccountNo, double amount) throws SystemException, Exception {
         return bankDAO.transfer(fromAccountNo, toAccountNo, amount);
     }
 

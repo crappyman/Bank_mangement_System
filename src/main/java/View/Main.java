@@ -25,7 +25,6 @@ public class Main {
 
         Customer cust = null;
         Employee empl = null;
-
         boolean flag = true;
         while (flag) {
             System.out.println("=========================");
@@ -111,10 +110,10 @@ public class Main {
                                             double amount = input.nextDouble();
                                             input.nextLine();
                                             if (amount > 0) {
-                                                double balance = bsi.transfer(cust.getAccountNo(), accNo, amount);
-                                                if (balance == -1) {
-                                                    System.out.println("Account not found");
-                                                } else if (balance == 0) {
+                                                boolean balance = bsi.transfer(cust.getAccountNo(), accNo, amount);
+                                               if (balance == false) {
+                                                   System.out.println("Account not found");
+                                                } else if (balance == true) {
                                                     System.out.println("Insufficient Balance");
                                                 } else {
                                                     System.out.println("Transfer Succesfully!\nYour new balance is: " + balance);

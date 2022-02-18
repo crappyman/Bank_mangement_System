@@ -22,5 +22,5 @@ public interface BankService {
 
   //  double withdraw(int accountNo, double amount);
 
-    double transfer(int fromAccountNo, int toAccountNo, double amount) throws SystemException, Exception;
+    boolean transfer(int fromAccountNo, int toAccountNo, double amount) throws SystemException, Exception;
 }

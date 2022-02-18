@@ -20,20 +20,21 @@ public class BankJdbcDaoImpl implements BankDAO {
 	public static final Logger LOG = LogManager.getLogger(BankJdbcDaoImpl.class);
 
 	@Override
-	public List<Customer> fetchAllCustomers() throws SystemException, AccountNotFoundException {
+	public List<Customer> fetchAllCustomers() throws SystemException, AccountNotFoundException{
 		LOG.info("Exit fetchAllCustomers() in DAO");
 		List<Customer> allCustomer = new ArrayList<Customer>();
 		Connection conn = DBUtil.obtainConnection();
 		try {
-			Statement stmt = (Statement) conn.createStatement();
-			String query = "SELECT * FROM customer_details";
+			Statement stmt = conn.createStatement();
+			String query = "select * from customer_details";
 
-			ResultSet rs = ((java.sql.Statement) stmt).executeQuery(query);
+			ResultSet rs = stmt.executeQuery(query);
+		
 // iterate through the result set 
 			while (rs.next()) {
 
 				Customer customer = new Customer(rs.getString(1), rs.getString(2), rs.getDouble(3));
-
+				
 				allCustomer.add(customer);
 			}
 		} catch (SQLException e) {
@@ -122,24 +123,39 @@ public class BankJdbcDaoImpl implements BankDAO {
 
 
 	@Override
-	public double transfer(int fromAccountNo, int toAccountNo, double amount) throws SystemException, Exception {
+	public boolean transfer(int fromAccountNo, int toAccountNo, double amount) throws SystemException, Exception {
 		Connection conn = DBUtil.obtainConnection();
 		Statement stmt = null;
 		try {
 			stmt = (Statement) conn.createStatement();
+
+			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
-		String query1 = "SELECT balance FROM customer_details WHERE  account_no=" + fromAccountNo;
-		System.out.println(query1);
-		ResultSet rs = ((java.sql.Statement) stmt).executeQuery(query1);
+		String query1 = "UPDATE account_details SET balance=account_balance-"+amount+" WHERE account_id="+fromAccountNo;
+		String query2 = "UPDATE account_details SET balance=account_balance+"+amount+" WHERE account_id="+toAccountNo;
 
-        int abal=0;
-		double newBalanse = abal + amount;
-		String query = "UPDATE customer_details SET balance=" + newBalanse + " WHERE account_no=" + toAccountNo;
-		int rows = ((java.sql.Statement) stmt).executeUpdate(query);
-		return 0;
-	}
+		// some logic to check if balance of fromAccount is > transferMoney
+		
+		conn.setAutoCommit(false); // marks the start of the transaction
+		int rows1 = stmt.executeUpdate(query1);
+		// if something happened here
+		if(true)
+			throw new SQLException();
+		int rows2 = stmt.executeUpdate(query2);
+		conn.commit();// marks the end of the transaction and the changes are commited to the DB
+							//transaction was successful and data is in the new state of consistency
+		
+		System.out.println("Money transfered...");
+	
+		
+			conn.rollback();// marks the end of the transaction but the transaction has failed, data
+									// is in old state of consistency
+			System.out.println("Transaction failed...");
+		
+return true;
 
+}
 }

@@ -21,7 +21,7 @@ public interface BankDAO {
 
   
 
-    double transfer(int fromAccountNo, int toAccountNo, double amount) throws SystemException, Exception;
+    boolean transfer(int fromAccountNo, int toAccountNo, double amount) throws SystemException, Exception;
 
 	//double withdraw(int accountNo, double amount);
 
