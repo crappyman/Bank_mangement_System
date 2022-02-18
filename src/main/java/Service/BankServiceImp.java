@@ -1,25 +1,32 @@
 package Service;
 
-import DAO.BankDAOImp;
+import DAO.BankDAO;
+
+import DAO.BankJdbcDaoImpl;
 import Model.Customer;
 import Model.Employee;
+import exception.SystemException;
+
 import java.util.List;
+
+import javax.security.auth.login.AccountNotFoundException;
 
 public class BankServiceImp implements BankService {
 
-    BankDAOImp bankDAO;
+    BankDAO bankDAO;
 
     public BankServiceImp() {
-        bankDAO = new BankDAOImp();
+      
+    	bankDAO = new BankJdbcDaoImpl();
     }
 
     @Override
-    public List<Customer> fetchAllCustomers() {
+    public List<Customer> fetchAllCustomers() throws AccountNotFoundException, SystemException {
         return bankDAO.fetchAllCustomers();
     }
 
     @Override
-    public List<Employee> fetchAllEmployees() {
+    public List<Employee> fetchAllEmployees() throws AccountNotFoundException, SystemException {
         return bankDAO.fetchAllEmployees();
     }
 
@@ -29,22 +36,23 @@ public class BankServiceImp implements BankService {
     }
 
     @Override
-    public int createAccount(Customer cus) {
+    public int createAccount(Customer cus) throws SystemException {
         return bankDAO.createAccount(cus);
     }
 
-    @Override
-    public double deposit(int accountNo, double amount) {
-        return bankDAO.deposit(accountNo, amount);
-    }
+   // @Override
+   // public double deposit(int accountNo, double amount) {
+     //   return bankDAO.deposit(accountNo, amount);
+   // }
 
-    @Override
+  /* @Override
     public double withdraw(int accountNo, double amount) {
-        return bankDAO.withdraw(accountNo, amount);
-    }
-
+       return bankDAO.withdraw(accountNo, amount);
+       
+   // }
+*/
     @Override
-    public double transfer(int fromAccountNo, int toAccountNo, double amount) {
+    public double transfer(int fromAccountNo, int toAccountNo, double amount) throws SystemException, Exception {
         return bankDAO.transfer(fromAccountNo, toAccountNo, amount);
     }
 

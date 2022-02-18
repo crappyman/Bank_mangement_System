@@ -2,15 +2,20 @@ package View;
 
 import Model.Customer;
 import Model.Employee;
+import Service.BankService;
 import Service.BankServiceImp;
+import exception.SystemException;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.security.auth.login.AccountNotFoundException;
+
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
-        BankServiceImp bsi = new BankServiceImp();
+    	BankService bsi = new BankServiceImp();
         Scanner input = new Scanner(System.in);
         ArrayList<Customer> listRequest = new ArrayList<>();
 
@@ -78,7 +83,7 @@ public class Main {
                                             double amount = input.nextDouble();
                                             input.nextLine();
                                             if (amount > 0) {
-                                                System.out.println("Deposited!\n Your new Balance is: " + bsi.deposit(cust.getAccountNo(), amount));
+                                            
                                             } else {
                                                 System.out.println("Amount should be greater than 0");
                                             }
@@ -88,25 +93,7 @@ public class Main {
                                         }
                                         break;
                                     case "2":
-                                        System.out.print("Enter amount: ");
-                                        try {
-                                            double amount = input.nextDouble();
-                                            input.nextLine();
-                                            if (amount > 0) {
-                                                double balance = bsi.withdraw(cust.getAccountNo(), amount);
-                                                if (balance != -1) {
-                                                    System.out.println("Withdrwal Succesfully!\nYour new balance is: " + balance);
-                                                } else {
-                                                    System.out.println("Insufficient Balance");
-                                                }
-
-                                            } else {
-                                                System.out.println("Amount should be greater than 0");
-                                            }
-
-                                        } catch (NumberFormatException e) {
-                                            System.out.println("Amount should be a number");
-                                        }
+                                     
                                         break;
                                     case "3":
                                         System.out.print("Enter Account No. in which you want to transfer: ");

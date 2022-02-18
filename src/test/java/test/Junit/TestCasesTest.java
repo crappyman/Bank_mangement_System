@@ -4,9 +4,12 @@ import Service.BankServiceImp;
 import static junit.framework.Assert.assertEquals;
 import org.junit.Test;
 
+import DAO.BankDAO;
+import DAO.BankJdbcDaoImpl;
+
 public class TestCasesTest {
 
-    BankServiceImp bsi = new BankServiceImp();
+	BankDAO bsi = new BankJdbcDaoImpl();
 
     @Test
     public void Deposit1() {
