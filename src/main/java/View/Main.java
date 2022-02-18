@@ -11,8 +11,12 @@ import java.util.Scanner;
 
 import javax.security.auth.login.AccountNotFoundException;
 
-public class Main {
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+
+public class Main {
+	public static final Logger LOG = (Logger) LogManager.getLogger(Main.class);
     public static void main(String[] args) throws Exception {
 
     	BankService bsi = new BankServiceImp();
@@ -27,8 +31,8 @@ public class Main {
             System.out.println("=========================");
             System.out.println("Bank MGT");
             System.out.println("=========================");
-            System.out.println("1: Customer");
-            System.out.println("2: Employee");
+            System.out.println("1: LOGIN AS Customer");
+            System.out.println("2: LOGIN AS AN Employee");
             System.out.println("3: Create Bank Account");
             System.out.println("0: Exit");
             System.out.println("=========================");
@@ -45,6 +49,7 @@ public class Main {
                             input.nextLine();
                             break;
                         } catch (NumberFormatException e) {
+                        	LOG.error(e);
                             System.out.println("Account No. should be in integer");
                         }
                     }
@@ -63,12 +68,12 @@ public class Main {
                     if (match) {
 
                         while (flag) {
-                            if (cust.getStatus().equals("Active")) {
+                           // if (cust.getStatus().equals("Active")) {
                                 System.out.println("=========================");
                                 System.out.println("Welcome " + cust.getName());
                                 System.out.println("=========================");
-                                System.out.println("1: Deposit");
-                                System.out.println("2: Withdraw");
+                              //  System.out.println("1: Deposit");
+                              //  System.out.println("2: Withdraw");
                                 System.out.println("3: Transfer");
                                 System.out.println("4: Check Balance");
                                 System.out.println("0: Logout");
@@ -88,7 +93,9 @@ public class Main {
                                                 System.out.println("Amount should be greater than 0");
                                             }
 
-                                        } catch (NumberFormatException e) {
+                                        } catch (NumberFormatException e)
+                                        {
+                                        	LOG.error(e);
                                             System.out.println("Amount should be a number");
                                         }
                                         break;
@@ -122,7 +129,7 @@ public class Main {
                                         }
 
                                         break;
-                                    case "4":
+                                        case "4":
                                         System.out.println("Balance: " + cust.getBalance());
                                         break;
                                     case "0":
@@ -131,9 +138,10 @@ public class Main {
                                     default:
                                         System.out.println("Invalid choice");
                                 }
-                            } else {
-                                System.out.println("Your account is not active yet");
-                            }
+                          //} else {
+                            
+                                //System.out.println("Your account is not active yet");
+                          //  }
                         }
                         flag = true;
                     } else {
@@ -163,7 +171,7 @@ public class Main {
                             System.out.println("=========================");
                             System.out.println("Welcome " + empl.getUsername());
                             System.out.println("=========================");
-                            System.out.println("1: Approve Request");
+                           // System.out.println("1: Approve Request");
                             System.out.println("2: Fetch Account Details");
                             System.out.println("3: List Customers");
                             System.out.println("0: Logout");
@@ -173,7 +181,7 @@ public class Main {
 
                             switch (choice) {
                                 case "1":
-                                    if (!listRequest.isEmpty()) {
+                                    /*if (!listRequest.isEmpty()) {
                                         System.out.println("---------------------------");
                                         System.out.println("No.   Name           Amount");
                                         System.out.println("---------------------------");
@@ -200,9 +208,9 @@ public class Main {
                                         }
 
                                     } else {
-                                        System.out.println("No request");
+                                        System.out.println("your account is added successfully"2);
                                     }
-                                    break;
+                                    break;*/
                                 case "2":
                                     System.out.print("Enter Account No.:");
                                     accNo = input.nextInt();
@@ -258,7 +266,9 @@ public class Main {
                             amount = input.nextDouble();
                             input.nextLine();
                             break;
-                        } catch (NumberFormatException e) {
+                        } catch (NumberFormatException e)
+                        {
+                        	LOG.error(e);
                             System.out.println("Amount should be in integer");
                         }
                     }

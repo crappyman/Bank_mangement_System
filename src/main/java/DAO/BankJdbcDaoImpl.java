@@ -9,14 +9,19 @@ import java.util.List;
 
 import javax.security.auth.login.AccountNotFoundException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import Model.Customer;
 import Model.Employee;
 import exception.SystemException;
 
 public class BankJdbcDaoImpl implements BankDAO {
+	public static final Logger LOG = LogManager.getLogger(BankJdbcDaoImpl.class);
 
 	@Override
 	public List<Customer> fetchAllCustomers() throws SystemException, AccountNotFoundException {
+		LOG.info("Exit fetchAllCustomers() in DAO");
 		List<Customer> allCustomer = new ArrayList<Customer>();
 		Connection conn = DBUtil.obtainConnection();
 		try {
@@ -37,12 +42,13 @@ public class BankJdbcDaoImpl implements BankDAO {
 		if (allCustomer.isEmpty()) {
 			throw new AccountNotFoundException();
 		}
-
+		LOG.info("Exited fetchAllCustomers() in DAO");
 		return allCustomer;
 	}
 
 	@Override
 	public List<Employee> fetchAllEmployees() throws SystemException, AccountNotFoundException {
+		LOG.info("Entered fetchAllEmployees() in DAO");
 
 		List<Employee> allEmployee = new ArrayList<Employee>();
 		Connection conn = DBUtil.obtainConnection();
@@ -64,12 +70,13 @@ public class BankJdbcDaoImpl implements BankDAO {
 		if (allEmployee.isEmpty()) {
 			throw new AccountNotFoundException();
 		}
-
+		LOG.info("Exit fetchAllEmployees() in DAO");
 		return allEmployee;
 	}
 
 	@Override
 	public Customer fetchAcount(int accountNo) {
+		LOG.info("Entered fetchAcount() in DAO");
 		Customer customer = null;
 		Connection conn = DBUtil.obtainConnection();
 		try {
@@ -84,11 +91,13 @@ public class BankJdbcDaoImpl implements BankDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		LOG.info("Exit fetchAcount() in DAO");
 		return customer;
 	}
 
 	@Override
 	public int createAccount(Customer cus) throws SystemException {
+		LOG.info("Entered createAccount() in DAO");
 		Connection conn = DBUtil.obtainConnection();
 		try {
 			Statement stmt = (Statement) conn.createStatement();
@@ -107,6 +116,7 @@ public class BankJdbcDaoImpl implements BankDAO {
 		} catch (SQLException e) {
 			throw new SystemException();
 		}
+		LOG.info("Exit createAccount() in DAO");
 		return cus.getAccountNo();
 	}
 
@@ -124,8 +134,8 @@ public class BankJdbcDaoImpl implements BankDAO {
 		String query1 = "SELECT balance FROM customer_details WHERE  account_no=" + fromAccountNo;
 		System.out.println(query1);
 		ResultSet rs = ((java.sql.Statement) stmt).executeQuery(query1);
-		double abal = rs.getInt(1);
 
+        int abal=0;
 		double newBalanse = abal + amount;
 		String query = "UPDATE customer_details SET balance=" + newBalanse + " WHERE account_no=" + toAccountNo;
 		int rows = ((java.sql.Statement) stmt).executeUpdate(query);
