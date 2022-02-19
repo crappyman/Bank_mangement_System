@@ -52,7 +52,7 @@ public class Main {
                    for (Customer cus : bsi.fetchAllCustomers()) {
                 	   
                 	  if (cus.getName().equals(Name) && cus.getPassword().equals(passWord)) {
-                		 System.out.println(bsi.fetchAllCustomers());
+                		// System.out.println(bsi.fetchAllCustomers());
                         match = true;
                         cust = cus;
                            break;
@@ -103,26 +103,27 @@ public class Main {
                                      int   accNo = input.nextInt();
                                         input.nextLine();
                                         System.out.print("Enter amount: ");
+                                      
                                         try {
                                             double amount = input.nextDouble();
                                             input.nextLine();
-                                            if (amount > 0) {
+                                           if (amount > 0) {
                                                 boolean balance = bsi.transfer(cust.getAccountNo(), accNo, amount);
                                                if (balance == false) {
                                                    System.out.println("Account not found");
-                                                } else if (balance == true) {
-                                                    System.out.println("Insufficient Balance");
-                                                } else {
+                                              } else if (balance == true) {
+                                                  System.out.println("Insufficient Balance");
+                                              } else {
                                                     System.out.println("Transfer Succesfully!\nYour new balance is: " + balance);
-                                                }
+                                              }
 
-                                            } else {
-                                                System.out.println("Amount should be greater than 0");
-                                            }
+                                          } else {
+                                               System.out.println("Amount should be greater than 0");
+                                          }
 
-                                        } catch (NumberFormatException e) {
-                                            System.out.println("Amount should be a number");
-                                        }
+                                     } catch (NumberFormatException e) {
+                                           System.out.println("Amount should be a number");
+                                      }
 
                                         break;
                                         case "4":
@@ -131,8 +132,8 @@ public class Main {
                                     case "0":
                                         flag = false;
                                         break;
-                                    default:
-                                        System.out.println("Invalid choice");
+                                    //default:
+                                       // System.out.println("Invalid choice");
                                 }
                           //} else {
                             

@@ -134,8 +134,8 @@ public class BankJdbcDaoImpl implements BankDAO {
 			
 			e.printStackTrace();
 		}
-		String query1 = "UPDATE account_details SET balance=account_balance-"+amount+" WHERE account_id="+fromAccountNo;
-		String query2 = "UPDATE account_details SET balance=account_balance+"+amount+" WHERE account_id="+toAccountNo;
+		String query1 = "UPDATE account_no SET balance=balance-"+amount+" WHERE account="+fromAccountNo;
+		String query2 = "UPDATE account_no SET balance=balance+"+amount+" WHERE account_no="+toAccountNo;
 
 		// some logic to check if balance of fromAccount is > transferMoney
 		
