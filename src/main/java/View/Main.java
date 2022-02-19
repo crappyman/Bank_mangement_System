@@ -23,7 +23,7 @@ public class Main {
         Scanner input = new Scanner(System.in);
         ArrayList<Customer> listRequest = new ArrayList<>();
 
-        Customer cust = null;
+       Customer cust = null;
         Employee empl = null;
         boolean flag = true;
         while (flag) {
@@ -42,25 +42,28 @@ public class Main {
                 case "1":
                     System.out.print("NAME : ");
                     String Name=input.next();
-                    String pass = input.nextLine();
+                  
                     System.out.print("PassWord : ");
                     String passWord=input.next(); 
                         	
-                 
+                
 
                     boolean match = false;
-                    for (Customer cus : bsi.fetchAllCustomers()) {
-                        if (cus.getName() == Name && cus.getPassword()==passWord) {
-                            match = true;
-                            cust = cus;
-                            break;
-                        }
+                   for (Customer cus : bsi.fetchAllCustomers()) {
+                	   
+                	  if (cus.getName().equals(Name) && cus.getPassword().equals(passWord)) {
+                		 System.out.println(bsi.fetchAllCustomers());
+                        match = true;
+                        cust = cus;
+                           break;
+                       }
+                	
                     }
-
+                  
                     if (match) {
 
                         while (flag) {
-                           // if (cust.getStatus().equals("Active")) {
+                          
                                 System.out.println("=========================");
                                 System.out.println("Welcome " + cust.getName());
                                 System.out.println("=========================");
@@ -137,8 +140,8 @@ public class Main {
                           //  }
                         }
                         flag = true;
-                    } else {
-                        System.out.println("Account No. or password is invalid");
+                  //  } else {
+                       // System.out.println("Account No. or password is invalid");
                     }
 
                     break;

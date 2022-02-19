@@ -83,13 +83,13 @@ public class BankJdbcDaoImpl implements BankDAO {
 		try {
 			Statement stmt = (Statement) conn.createStatement();
 			String query = "SELECT * FROM customer_details WHEERE account_no=" + accountNo;
-			ResultSet rs = ((java.sql.Statement) stmt).executeQuery(query);
+			ResultSet rs = stmt.executeQuery(query);
 			if (rs.next()) {
 				customer = new Customer(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getDouble(4));
 
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		LOG.info("Exit fetchAcount() in DAO");

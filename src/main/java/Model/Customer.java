@@ -24,6 +24,15 @@ public class Customer {
 		super();
 	
 	}
+	
+	
+
+
+	public Customer(String name, String password) {
+		super();
+		this.name = name;
+		this.password = password;
+	}
 
 
 	public int getAccountNo() {
