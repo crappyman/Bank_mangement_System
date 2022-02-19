@@ -40,24 +40,17 @@ public class Main {
 
             switch (choice) {
                 case "1":
-                    System.out.print("Account No: ");
-                    int accNo;
-                    while (true) {
-                        try {
-                            accNo = input.nextInt();
-                            input.nextLine();
-                            break;
-                        } catch (NumberFormatException e) {
-                        	LOG.error(e);
-                            System.out.println("Account No. should be in integer");
-                        }
-                    }
-                    System.out.print("Password: ");
+                    System.out.print("NAME : ");
+                    String Name=input.next();
                     String pass = input.nextLine();
+                    System.out.print("PassWord : ");
+                    String passWord=input.next(); 
+                        	
+                 
 
                     boolean match = false;
                     for (Customer cus : bsi.fetchAllCustomers()) {
-                        if (cus.getAccountNo() == accNo && cus.getPassword().equals(pass)) {
+                        if (cus.getName() == Name && cus.getPassword()==passWord) {
                             match = true;
                             cust = cus;
                             break;
@@ -82,6 +75,7 @@ public class Main {
 
                                 switch (choice) {
                                     case "1":
+                                   
                                         System.out.print("Enter amount: ");
                                         try {
                                             double amount = input.nextDouble();
@@ -103,7 +97,7 @@ public class Main {
                                         break;
                                     case "3":
                                         System.out.print("Enter Account No. in which you want to transfer: ");
-                                        accNo = input.nextInt();
+                                     int   accNo = input.nextInt();
                                         input.nextLine();
                                         System.out.print("Enter amount: ");
                                         try {
@@ -212,7 +206,7 @@ public class Main {
                                     break;*/
                                 case "2":
                                     System.out.print("Enter Account No.:");
-                                    accNo = input.nextInt();
+                                   int accNo = input.nextInt();
                                     input.nextLine();
                                     match = false;
                                     for (Customer c : bsi.fetchAllCustomers()) {
@@ -254,10 +248,11 @@ public class Main {
 
                     break;
                 case "3":
+                	Customer newCustomer = new Customer();
                     System.out.print("Enter your full name: ");
-                    String name = input.nextLine();
+                    newCustomer.setName(input.nextLine());
                     System.out.print("Enter password: ");
-                    String newPass = input.nextLine();
+                    newCustomer.setPassword(input.nextLine());
                     System.out.print("Enter amount you want to put in your account: ");
                     double amount;
                     while (true) {
@@ -271,10 +266,15 @@ public class Main {
                             System.out.println("Amount should be in integer");
                         }
                     }
-
-                    Customer c = new Customer(name, newPass, amount);
-                    listRequest.add(c);
-                    System.out.println("Request for creating account is under review.\nThanks for visiting");
+                    newCustomer.setBalance(amount);
+                    Customer addedCustomer;
+					try {
+						addedCustomer = bsi.createAccount(newCustomer);
+						System.out.println("Customer Added Successfully!!\nYour new Account Nomber is " + addedCustomer.getAccountNo());
+					} catch (SystemException e) {
+						LOG.error(e);
+						System.out.println(e.getMessage());
+					}
 
                     break;
                 case "0":

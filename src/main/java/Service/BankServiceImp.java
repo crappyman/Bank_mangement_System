@@ -36,11 +36,11 @@ public class BankServiceImp implements BankService {
     }
 
     @Override
-    public int createAccount(Customer cus) throws SystemException {
+    public Customer createAccount(Customer cus) throws SystemException {
         return bankDAO.createAccount(cus);
     }
 
-   // @Override
+   // @Override;
    // public double deposit(int accountNo, double amount) {
      //   return bankDAO.deposit(accountNo, amount);
    // }

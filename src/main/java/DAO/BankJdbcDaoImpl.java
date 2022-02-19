@@ -33,7 +33,7 @@ public class BankJdbcDaoImpl implements BankDAO {
 // iterate through the result set 
 			while (rs.next()) {
 
-				Customer customer = new Customer(rs.getString(1), rs.getString(2), rs.getDouble(3));
+				Customer customer = new Customer(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getDouble(4));
 				
 				allCustomer.add(customer);
 			}
@@ -85,7 +85,7 @@ public class BankJdbcDaoImpl implements BankDAO {
 			String query = "SELECT * FROM customer_details WHEERE account_no=" + accountNo;
 			ResultSet rs = ((java.sql.Statement) stmt).executeQuery(query);
 			if (rs.next()) {
-				customer = new Customer(rs.getString(1), rs.getString(2), rs.getDouble(3));
+				customer = new Customer(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getDouble(4));
 
 			}
 		} catch (SQLException e) {
@@ -97,14 +97,14 @@ public class BankJdbcDaoImpl implements BankDAO {
 	}
 
 	@Override
-	public int createAccount(Customer cus) throws SystemException {
+	public Customer createAccount(Customer cus) throws SystemException {
 		LOG.info("Entered createAccount() in DAO");
 		Connection conn = DBUtil.obtainConnection();
 		try {
-			Statement stmt = (Statement) conn.createStatement();
+			Statement stmt =  conn.createStatement();
 			int lastAccount = 0;
 			String query1 = "SELECT MAX(account_no) FROM customer_details";
-			ResultSet rs = ((java.sql.Statement) stmt).executeQuery(query1);
+			ResultSet rs = stmt.executeQuery(query1);
 			if (rs.next()) {
 				lastAccount = rs.getInt(1);
 			}
@@ -112,13 +112,13 @@ public class BankJdbcDaoImpl implements BankDAO {
 
 			String query2 = "INSERT INTO customer_details VALUES(" + newAccount + ",'" + cus.getName() + "','"
 					+ cus.getPassword() + "','" + cus.getBalance() + "')";
-			int rows = ((java.sql.Statement) stmt).executeUpdate(query2);
+			int rows =  stmt.executeUpdate(query2);
 			cus.setAccountNo(newAccount);
 		} catch (SQLException e) {
 			throw new SystemException();
 		}
 		LOG.info("Exit createAccount() in DAO");
-		return cus.getAccountNo();
+		return cus;
 	}
 
 

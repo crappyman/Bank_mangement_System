@@ -17,7 +17,7 @@ public interface BankDAO {
 
     Customer fetchAcount(int accountNo);
 
-    int createAccount(Customer cus) throws SystemException;
+    Customer createAccount(Customer cus) throws SystemException;
 
   
 

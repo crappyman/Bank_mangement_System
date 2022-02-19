@@ -8,14 +8,25 @@ public class Customer {
     private double balance;
     private String status;
 
-    public Customer(String name, String password, double balance) {
-        this.name = name;
-        this.password = password;
-        this.balance = balance;
-        this.status = "Processing";
-    }
+   
 
-    public int getAccountNo() {
+    public Customer(int accountNo, String name, String password, double balance) {
+		super();
+		this.accountNo = accountNo;
+		this.name = name;
+		this.password = password;
+		this.balance = balance;
+		//this.status = status;
+	}
+
+    
+	public Customer() {
+		super();
+	
+	}
+
+
+	public int getAccountNo() {
         return accountNo;
     }
 
