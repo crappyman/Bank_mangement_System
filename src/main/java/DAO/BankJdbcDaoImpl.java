@@ -136,16 +136,16 @@ public class BankJdbcDaoImpl implements BankDAO {
 		String query2 = "UPDATE customer_details SET balance=balance+" + amount + " WHERE account_no=" + toAccountNo;
 
 		
-
+conn.setAutoCommit(false);
 		 
 		int rows1 = stmt.executeUpdate(query1);
         int rows = stmt.executeUpdate(query2);
 		
-		
+		conn.commit();
 		System.out.println("Money transfered...");
 
 		
-		
+		conn.rollback();
 
 		return true;
 
