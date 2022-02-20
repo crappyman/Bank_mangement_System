@@ -26,6 +26,7 @@ public class Main {
        Customer cust = null;
         Employee empl = null;
         boolean flag = true;
+      
         while (flag) {
             System.out.println("=========================");
             System.out.println("Bank MGT");
@@ -286,8 +287,11 @@ public class Main {
                     break;
                 default:
                     System.out.println("Invalid choice");
+          
+           
             }
+       
         }
-
+		
     }
 }
