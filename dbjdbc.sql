@@ -12,5 +12,5 @@ INSERT INTO customer_details(account_no,name,password,balance)VALUES(103,'hass',
 						  
 INSERT INTO employee_details(name,password)VALUES('apl',111);
 INSERT INTO employee_details(name,password)VALUES('alic',222);
-INSERT INTO employee_details(name,password)VALUES('joly',333);
+INSERT INTO employee_details(name,password)VALUES('ali',333);
 
